@@ -9,6 +9,8 @@ public class Planet{
   public Planet(int x, int y, int massIN){
   pos = new PVector(x,y);
   mass = massIN;
+  vel = new PVector(1,0);
+  acc = new PVector(0,0);
     
   }
   
@@ -19,6 +21,11 @@ public class Planet{
   
   public int getMass(){
   return mass;
+  }
+  
+  public void update(int timestep){
+  vel.add(acc.mult(timestep));
+  pos.add(vel.mult(timestep));
   }
   
 }
