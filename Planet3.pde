@@ -2,6 +2,7 @@
 
 Planet bob ;
 Planet voti;
+Planet simon;
 float timestep = 1;
 
 ArrayList<Planet> bobs;
@@ -11,22 +12,22 @@ size(600, 400);
 
 bob = new Planet(30, 12, 200);
 voti= new Planet(100, 200, 20);
+simon= new Planet(30, 200, 20);
 
 bobs= new ArrayList<Planet>();
 
 bobs.add(bob);
 bobs.add(voti);
+bobs.add(simon);
 }
 
 void draw(){
-  
-circle(bob.getPos().x,bob.getPos().y, 10);
-//bob.update(1);
+
 
 for (int i = 0; i < bobs.size(); i++) {
-println(bobs.get(i));
-bobs.get(i).update(1);
+  bobs.get(i).update(1);
+  circle(bobs.get(i).getPos().x,bobs.get(i).getPos().y, 10);
+  }
 
-}
 
 }
