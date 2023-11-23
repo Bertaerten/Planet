@@ -22,7 +22,7 @@ bobs.add(simon);
 }
 
 void draw(){
-
+Background();
 
 for (int i = 0; i < bobs.size(); i++) {
   bobs.get(i).update(1);
@@ -31,3 +31,10 @@ for (int i = 0; i < bobs.size(); i++) {
 
 
 }
+
+void Background(){
+  fill(0, 10);
+  rect(0, 0, width, height);
+  fill(255);
+  noStroke();
+  ellipse(random(width), random(height), 2, 2);
