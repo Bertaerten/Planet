@@ -1,0 +1,130 @@
+ArrayList<Ball> balls;
+
+int rectWidth = 30;
+int rectHeight = 30;
+
+int beginPosition;
+int stopPosition;
+
+// -------------------------------------
+
+void setup() {
+  size(400, 800);
+
+  frameRate(10);
+  smooth();
+  noStroke();
+
+  // now start filling the ArrayList  
+
+  beginPosition = 0;
+  stopPosition = height-rectHeight/2;
+
+  balls = new ArrayList();
+  for (int i=0; i<random (12, 23); i++) {
+    color colorTemp = color(random(0, 255), random(0, 255), random(0, 255));
+    Ball newBall = new Ball( random(0, width), random(0, height), 
+      rectWidth, rectHeight, 
+      beginPosition, random(100), 
+      colorTemp);  
+    balls.add( newBall );
+  } // for 
+  //
+} // func 
+
+void draw() {
+  background(255);
+
+  // for-loop backward, because no reason 
+  for (int i = balls.size()-1; i >= 0; i--) { 
+    Ball ball = balls.get(i);
+    ball.moveThis(); 
+    ball.display();
+  } // for 
+
+  // for-loop backward, because we are removing items from the list
+  for (int i = balls.size()-1; i >= 0; i--) { 
+    Ball ball = balls.get(i);
+    if (!ball.alive) 
+      balls.remove(i);
+  } // for 
+
+  println(balls.size());
+  fill(0);
+  text("Add balls with mouse click. Balls disappear below.", 15, 15);
+} // func 
+
+// ------------------------------------------------------------
+
+void mousePressed() {
+  // add ball at mouse position
+  color colorTemp = color(random(0, 255), random(0, 255), random(0, 255));
+  balls.add(new Ball( mouseX, mouseY, 
+    rectWidth, rectHeight, 
+    beginPosition, random(100, 200), 
+    colorTemp));
+}
+
+// ===========================================
+
+class Ball {  
+  // pos
+  float x;
+  float y;
+
+  // size
+  float w;
+  float h;
+
+  // movement 
+  float beginPos;
+  float stopPos;
+  float speedX = random(-9, 9);
+  float speedY = random(-9, 9);
+
+  // color 
+  color cBall;
+
+  // ball still alive?
+  boolean alive = true; 
+
+  float k=0; // how old am I ?  
+
+  Ball(float tempX, float tempY, 
+    float tempW, float tempH, 
+    float tempBegin, float tempStop, 
+    color tempcBall) {
+    x = tempX;
+    y = tempY;
+    w = tempW;
+    h = tempH;
+    //   beginPos = tempBegin; // not in use 
+    stopPos = tempStop+y;      // only positive y values are checked 
+    cBall=tempcBall;
+
+    // we don't want any slow guys
+    if (abs(speedX) < .9) 
+      speedX = random(1, 6);
+    if (abs(speedY) < .9) 
+      speedY = random(1, 6);
+  } // constr 
+
+  void moveThis() {
+    x = x + speedX; 
+    y = y + speedY;
+    if (y > stopPos) {
+      y = stopPos;
+      alive = false;
+    }
+    k+=1.5; // older
+  } // method 
+
+  void display() {
+    fill(cBall, 100-k);
+    if (k>=100) 
+      alive=false; 
+    ellipse (x, y, w, h);
+  } // method 
+  //
+} // class
+//
