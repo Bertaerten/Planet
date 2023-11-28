@@ -35,8 +35,8 @@ void draw() {
 
  
   for (int i = 0; i < ballz.size(); i++) {
-    target1.setMag(1);
-    target2.setMag(1);
+    //target1.setMag(1);
+    //target2.setMag(1);
     
     for(int j=ballz.size()-1;j>i;j--){
     
@@ -46,6 +46,7 @@ void draw() {
     target1.set((ballz.get(j).getPos().x  -  ballz.get(i).getPos().x)  ,  (ballz.get(j).getPos().y)  -  ballz.get(i).getPos().y);
     
     float r = dist(ballz.get(j).getPos().x, ballz.get(j).getPos().y, ballz.get(i).getPos().x, ballz.get(i).getPos().y);
+    
     if(r>15){
     target1.setMag((ballz.get(i).getMass()*ballz.get(j).getMass())/(sq(r)));
     target2.setMag((ballz.get(i).getMass()*ballz.get(j).getMass())/(sq(r)));
@@ -58,7 +59,6 @@ void draw() {
     }
    
     
-    println(r);
     }
     
     
@@ -70,12 +70,7 @@ void draw() {
   
   for (int i = 0; i < ballz.size(); i++) {
     ballz.get(i).update(timestep);
-    circle(ballz.get(i).getPos().x, ballz.get(i).getPos().y, ballz.get(i).getSize());
-    
-    //if(ballz.get(i).getPos().y>300){
-      //ballz.get(i).setAcc(up);
-    //}
-    
+    ballz.get(i).render();
   }
 }
 
